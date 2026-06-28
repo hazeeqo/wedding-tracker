@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Tracker</title>
+</head>
+<body>
+
+<h2>Wedding Tracker 💍</h2>
+
+<!-- EXPENSES -->
+<h3>Expenses</h3>
+<input id="name" placeholder="Item">
+<input id="cost" placeholder="Cost">
+<button onclick="addExpense()">Add</button>
+
+<div id="expenses"></div>
+
+<hr>
+
+<!-- SAVINGS -->
+<h3>Savings</h3>
+<input id="saving" placeholder="Amount">
+<button onclick="addSaving()">Add</button>
+
+<div id="savings"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAfMWQFoIeTmfS_n6zRZvylEswOv9ZrZ-s",
+  authDomain: "wedding-tracker-bed3d.firebaseapp.com",
+  projectId: "wedding-tracker-bed3d",
+  storageBucket: "wedding-tracker-bed3d.firebasestorage.app",
+  messagingSenderId: "41981843613",
+  appId: "1:41981843613:web:56865dcb2ed976dd905c74"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* EXPENSES */
+window.addExpense = async () => {
+  await addDoc(collection(db, "expenses"), {
+    name: name.value,
+    cost: Number(cost.value)
+  });
+};
+
+onSnapshot(collection(db, "expenses"), (snap) => {
+  let html = "";
+  snap.forEach(d => {
+    html += `<div>${d.data().name} - £${d.data().cost}</div>`;
+  });
+  expenses.innerHTML = html;
+});
+
+/* SAVINGS */
+window.addSaving = async () => {
+  await addDoc(collection(db, "savings"), {
+    amount: Number(saving.value)
+  });
+};
+
+onSnapshot(collection(db, "savings"), (snap) => {
+  let html = "";
+  snap.forEach(d => {
+    html += `<div>£${d.data().amount}</div>`;
+  });
+  savings.innerHTML = html;
+});
+</script>
+
+</body>
+</html>
