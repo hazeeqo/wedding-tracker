@@ -9,12 +9,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_BUCKET",
-  messagingSenderId: "YOUR_ID",
-  appId: "YOUR_APP"
+  apiKey: "AIzaSyAfMWQFoIeTmfS_n6zRZvylEswOv9ZrZ-s",
+  authDomain: "wedding-tracker-bed3d.firebaseapp.com",
+  projectId: "wedding-tracker-bed3d",
+  storageBucket: "wedding-tracker-bed3d.firebasestorage.app",
+  messagingSenderId: "41981843613",
+  appId: "1:41981843613:web:56865dcb2ed976dd905c74",
+  measurementId: "G-TRYRPF8362"
 };
 
 const app = initializeApp(firebaseConfig);
