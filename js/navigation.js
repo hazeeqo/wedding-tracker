@@ -1,16 +1,24 @@
 // ==========================
-// Navigation System
+// Navigation System (FIXED)
 // ==========================
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // FORCE initial state
+    hideAllScreens();
     showSplash();
 
+    // Move to dashboard after delay
     setTimeout(() => {
         showDashboard();
     }, 2000);
 
 });
+
+
+// ==========================
+// Helper
+// ==========================
 
 function hideAllScreens() {
 
@@ -18,24 +26,39 @@ function hideAllScreens() {
         s.classList.add("hidden");
     });
 
-    document.getElementById("splash").classList.add("hidden");
+    const splash = document.getElementById("splash");
+    if (splash) splash.classList.add("hidden");
 }
 
 
+// ==========================
 // Screens
+// ==========================
+
 function showSplash() {
     hideAllScreens();
-    document.getElementById("splash").classList.remove("hidden");
+
+    const splash = document.getElementById("splash");
+    if (splash) splash.classList.remove("hidden");
 }
 
 function showDashboard() {
     hideAllScreens();
-    document.getElementById("dashboard").classList.remove("hidden");
+
+    const dash = document.getElementById("dashboard");
+    if (dash) dash.classList.remove("hidden");
+
+    // IMPORTANT: load data if exists
+    if (window.renderAll) {
+        window.renderAll();
+    }
 }
 
 function showExpenses() {
     hideAllScreens();
-    document.getElementById("expensesPage").classList.remove("hidden");
+
+    const exp = document.getElementById("expensesPage");
+    if (exp) exp.classList.remove("hidden");
 }
 
 function backHome() {
@@ -43,7 +66,10 @@ function backHome() {
 }
 
 
+// ==========================
 // Modal
+// ==========================
+
 function openExpenseModal() {
     document.getElementById("expenseModal").classList.remove("hidden");
 }
@@ -53,7 +79,10 @@ function closeExpenseModal() {
 }
 
 
-// Global access
+// ==========================
+// Expose globally
+// ==========================
+
 window.showExpenses = showExpenses;
 window.backHome = backHome;
 window.showDashboard = showDashboard;
