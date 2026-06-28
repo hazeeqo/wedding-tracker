@@ -1,259 +1,77 @@
-/* =====================
-   Base Setup
-===================== */
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: Arial;
 }
 
 body {
     background: #f6f7fb;
-    color: #222;
 }
 
-/* =====================
-   Screen System
-===================== */
+/* ======================
+   START STATE (IMPORTANT)
+====================== */
 
-.screen {
-    padding: 20px;
-}
-
-.hidden {
+#dashboard,
+#expensesPage,
+#expenseModal {
     display: none;
 }
 
-/* =====================
-   Splash Screen
-===================== */
-
+/* Splash */
 #splash {
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #ffffff, #f0f2f8);
-    text-align: center;
 }
 
-#splash .logo {
-    font-size: 60px;
-    margin-bottom: 10px;
+/* Cards */
+.summaryCard,
+.menuCard,
+.expenseCard {
+    background: white;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 12px;
 }
 
-#splash h1 {
-    font-size: 28px;
-    margin-bottom: 8px;
-}
-
-#splash p {
-    color: #666;
-}
-
-/* =====================
-   Header
-===================== */
-
-header {
-    margin-bottom: 20px;
-}
-
-header h2 {
-    font-size: 22px;
-}
-
-header p {
-    color: #666;
-    font-size: 14px;
-}
-
-/* =====================
-   Summary Card
-===================== */
-
-.summaryCard {
-    background: #fff;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    margin-bottom: 20px;
-}
-
-.summaryCard h1 {
-    font-size: 28px;
-    margin: 10px 0;
-}
-
-.progressBar {
-    height: 8px;
-    background: #eee;
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 10px 0;
-}
-
-#budgetProgress {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #ff7eb3, #ff758c);
-    transition: 0.3s;
-}
-
-.summaryNumbers {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.summaryNumbers span {
-    font-size: 12px;
-    color: #777;
-}
-
-/* =====================
-   Menu Grid
-===================== */
-
+/* Grid */
 .menuGrid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
-.menuCard {
-    background: #fff;
-    padding: 20px;
-    border-radius: 14px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.menuCard:hover {
-    transform: translateY(-2px);
-}
-
-.menuCard .icon {
-    font-size: 24px;
-    margin-bottom: 8px;
-}
-
-/* =====================
-   Buttons
-===================== */
-
+/* Button */
 .primaryBtn {
     width: 100%;
     padding: 12px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    background: #ff6b81;
     color: white;
-    font-size: 16px;
-    margin: 10px 0;
-    cursor: pointer;
-}
-
-/* =====================
-   Expenses List
-===================== */
-
-#expenseList,
-#recentExpenseList {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.expenseCard {
-    background: #fff;
-    padding: 15px;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-/* =====================
-   Page Header
-===================== */
-
-.pageHeader {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.pageHeader button {
     border: none;
-    background: none;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* =====================
-   Form
-===================== */
-
-.formContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-input, textarea {
-    padding: 10px;
     border-radius: 10px;
-    border: 1px solid #ddd;
-    outline: none;
+    margin-top: 10px;
 }
 
-textarea {
-    resize: none;
-    height: 80px;
-}
-
-/* =====================
-   Modal
-===================== */
-
-.modal {
+/* Modal */
+#expenseModal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.5);
-    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
 }
 
 .modalContent {
-    background: #fff;
-    width: 90%;
-    max-width: 420px;
+    background: white;
     padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.modalHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.modalHeader button {
-    border: none;
-    background: none;
-    font-size: 20px;
-    cursor: pointer;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
 }
