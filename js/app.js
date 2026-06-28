@@ -35,11 +35,13 @@ function render() {
 
         const div = document.createElement("div");
         div.className = "expenseCard";
+
         div.innerHTML = `
             <b>${e.item}</b><br>
             ${e.vendor}<br>
             RM ${e.cost}
         `;
+
         list.appendChild(div);
     });
 
@@ -47,7 +49,9 @@ function render() {
 
         const div = document.createElement("div");
         div.className = "expenseCard";
+
         div.innerHTML = `${e.item} - RM ${e.cost}`;
+
         recent.appendChild(div);
     });
 }
