@@ -2,165 +2,133 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Wedding Tracker</title>
 
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
 <body>
 
-    <!-- ================= Splash Screen ================= -->
+<!-- Splash -->
+<div id="splash">
+    <div class="logo">💍</div>
+    <h1>Wedding Tracker</h1>
+    <p>Planning your big day made easier</p>
+</div>
 
-    <div id="splash">
+<!-- Dashboard -->
+<div id="dashboard" class="screen hidden">
 
-        <div class="logo">💍</div>
+    <header>
+        <h2>Wedding Dashboard</h2>
+        <p>Welcome back</p>
+    </header>
 
-        <h1>Wedding Tracker</h1>
-        <p>Planning your big day made easier</p>
+    <div class="summaryCard">
+        <h3>Total Budget</h3>
+        <h1>RM 0</h1>
+
+        <div class="progressBar">
+            <div id="budgetProgress"></div>
+        </div>
+
+        <div class="summaryNumbers">
+            <div>
+                <span>Spent</span>
+                <strong id="spentAmount">RM 0</strong>
+            </div>
+            <div>
+                <span>Remaining</span>
+                <strong id="remainingAmount">RM 0</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="menuGrid">
+
+        <div class="menuCard" onclick="showExpenses()">
+            <div class="icon">💳</div>
+            Expenses
+        </div>
+
+        <div class="menuCard">
+            <div class="icon">💰</div>
+            Savings
+        </div>
+
+        <div class="menuCard">
+            <div class="icon">🧾</div>
+            Receipts
+        </div>
+
+        <div class="menuCard">
+            <div class="icon">📊</div>
+            Reports
+        </div>
 
     </div>
 
+    <div class="recent">
+        <h3>Recent Expenses</h3>
+        <div id="recentExpenseList">No expenses yet.</div>
+    </div>
 
+    <button class="primaryBtn" onclick="openExpenseModal()">
+        + Add Expense
+    </button>
 
-    <!-- ================= Dashboard ================= -->
+</div>
 
-    <div id="dashboard" class="screen hidden">
+<!-- Expenses Page -->
+<div id="expensesPage" class="screen hidden">
 
-        <header>
-            <h2>Wedding Dashboard</h2>
-            <p>Welcome back</p>
-        </header>
+    <div class="pageHeader">
+        <button onclick="backHome()">←</button>
+        <h2>Expenses</h2>
+    </div>
 
-        <div class="summaryCard">
+    <div id="expenseList"></div>
 
-            <h3>Total Budget</h3>
-            <h1>RM 0</h1>
+</div>
 
-            <div class="progressBar">
-                <div id="budgetProgress"></div>
-            </div>
+<!-- Modal -->
+<div id="expenseModal" class="modal hidden">
 
-            <div class="summaryNumbers">
-                <div>
-                    <span>Spent</span>
-                    <strong id="spentAmount">RM 0</strong>
-                </div>
+    <div class="modalContent">
 
-                <div>
-                    <span>Remaining</span>
-                    <strong id="remainingAmount">RM 0</strong>
-                </div>
-            </div>
-
+        <div class="modalHeader">
+            <h2>Add Expense</h2>
+            <button onclick="closeExpenseModal()">✕</button>
         </div>
 
+        <label>Item</label>
+        <input id="item">
 
+        <label>Vendor</label>
+        <input id="vendor">
 
-        <div class="menuGrid">
+        <label>Total Cost</label>
+        <input id="cost" type="number">
 
-            <div class="menuCard" onclick="showExpenses()">
-                <div class="icon">💳</div>
-                Expenses
-            </div>
+        <label>Deposit</label>
+        <input id="deposit" type="number">
 
-            <div class="menuCard">
-                <div class="icon">💰</div>
-                Savings
-            </div>
+        <label>Description</label>
+        <textarea id="desc"></textarea>
 
-            <div class="menuCard">
-                <div class="icon">🧾</div>
-                Receipts
-            </div>
-
-            <div class="menuCard">
-                <div class="icon">📊</div>
-                Reports
-            </div>
-
-        </div>
-
-
-
-        <div class="recent">
-
-            <h3>Recent Expenses</h3>
-
-            <div id="recentExpenseList">
-                No expenses yet.
-            </div>
-
-        </div>
-
-        <button class="primaryBtn" onclick="openExpenseModal()">
-            + Add Expense
+        <button class="primaryBtn" onclick="saveExpense()">
+            Save Expense
         </button>
 
     </div>
 
+</div>
 
-
-    <!-- ================= Expenses Page ================= -->
-
-    <div id="expensesPage" class="screen hidden">
-
-        <div class="pageHeader">
-            <button onclick="backHome()">←</button>
-            <h2>Expenses</h2>
-        </div>
-
-        <div id="expenseList"></div>
-
-    </div>
-
-
-
-    <!-- ================= Add Expense Modal ================= -->
-
-    <div id="expenseModal" class="modal hidden">
-
-        <div class="modalContent">
-
-            <div class="modalHeader">
-                <h2>Add Expense</h2>
-                <button onclick="closeExpenseModal()">✕</button>
-            </div>
-
-            <label>Item</label>
-            <input id="item" placeholder="Photography">
-
-            <label>Vendor</label>
-            <input id="vendor" placeholder="Vendor name">
-
-            <label>Total Cost (RM)</label>
-            <input id="cost" type="number">
-
-            <label>Deposit Paid (RM)</label>
-            <input id="deposit" type="number">
-
-            <label>Description</label>
-            <textarea id="desc"></textarea>
-
-            <button class="primaryBtn" onclick="saveExpense()">
-                Save Expense
-            </button>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- Scripts -->
-
-    <script src="js/navigation.js"></script>
-    <script type="module" src="js/app.js"></script>
+<!-- Scripts (IMPORTANT ORDER) -->
+<script src="js/navigation.js"></script>
+<script src="js/app.js"></script>
 
 </body>
-
 </html>
