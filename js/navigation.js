@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("App loaded");
 
+    // FORCE CLEAN START
     showSplash();
 
     setTimeout(() => {
@@ -14,6 +15,7 @@ function hideAll() {
     document.getElementById("splash").style.display = "none";
     document.getElementById("dashboard").style.display = "none";
     document.getElementById("expensesPage").style.display = "none";
+    document.getElementById("expenseModal").style.display = "none";
 }
 
 function showSplash() {
