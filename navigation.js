@@ -1,39 +1,28 @@
 // ==========================
 // Navigation System
-// Handles screen switching
 // ==========================
 
-// Wait until DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Show splash first
     showSplash();
 
-    // After 2 seconds go to dashboard
     setTimeout(() => {
         showDashboard();
     }, 2000);
+
 });
-
-
-// ==========================
-// Screen Helper
-// ==========================
 
 function hideAllScreens() {
 
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.add("hidden");
+    document.querySelectorAll(".screen").forEach(s => {
+        s.classList.add("hidden");
     });
 
     document.getElementById("splash").classList.add("hidden");
 }
 
 
-// ==========================
-// Navigation Functions
-// ==========================
-
+// Screens
 function showSplash() {
     hideAllScreens();
     document.getElementById("splash").classList.remove("hidden");
@@ -53,23 +42,21 @@ function backHome() {
     showDashboard();
 }
 
-function openForm() {
-    hideAllScreens();
-    document.getElementById("formPage").classList.remove("hidden");
+
+// Modal
+function openExpenseModal() {
+    document.getElementById("expenseModal").classList.remove("hidden");
 }
 
-function closeForm() {
-    showExpenses();
+function closeExpenseModal() {
+    document.getElementById("expenseModal").classList.add("hidden");
 }
 
 
-// ==========================
-// Make functions global
-// (so HTML onclick can access them)
-// ==========================
-
+// Global access
 window.showExpenses = showExpenses;
 window.backHome = backHome;
-window.openForm = openForm;
-window.closeForm = closeForm;
 window.showDashboard = showDashboard;
+
+window.openExpenseModal = openExpenseModal;
+window.closeExpenseModal = closeExpenseModal;
