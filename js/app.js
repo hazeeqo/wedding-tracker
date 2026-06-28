@@ -6,7 +6,6 @@ function saveExpense() {
     const vendor = document.getElementById("vendor").value;
     const cost = Number(document.getElementById("cost").value);
     const deposit = Number(document.getElementById("deposit").value);
-    const desc = document.getElementById("desc").value;
 
     const expense = {
         id: Date.now(),
@@ -14,15 +13,13 @@ function saveExpense() {
         vendor,
         cost,
         deposit,
-        remaining: cost - deposit,
-        desc
+        remaining: cost - deposit
     };
 
     expenses.push(expense);
 
     closeExpenseModal();
     clearForm();
-
     render();
 }
 
@@ -43,7 +40,6 @@ function render() {
             ${e.vendor}<br>
             RM ${e.cost}
         `;
-
         list.appendChild(div);
     });
 
@@ -52,7 +48,6 @@ function render() {
         const div = document.createElement("div");
         div.className = "expenseCard";
         div.innerHTML = `${e.item} - RM ${e.cost}`;
-
         recent.appendChild(div);
     });
 }
