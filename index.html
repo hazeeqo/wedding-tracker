@@ -1,59 +1,211 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wedding Tracker</title>
-  <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wedding Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<!-- SPLASH SCREEN -->
-<div id="splash">
-  <h1>Wedding Tracker 💍</h1>
-</div>
+    <!-- ================= Splash Screen ================= -->
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
-  <h2>Dashboard</h2>
+    <div id="splash">
 
-  <div class="card" onclick="showExpenses()">
-    Expenses
-  </div>
+        <div class="logo">
+            💍
+        </div>
 
-  <div class="card">
-    Savings (coming soon)
-  </div>
-</div>
+        <h1>Wedding Tracker</h1>
 
-<!-- EXPENSE PAGE -->
-<div id="expensesPage" class="hidden">
-  
-  <div class="header">
-    <button onclick="backHome()">←</button>
-    <h2>Expenses</h2>
-  </div>
+        <p>Planning your big day made easier</p>
 
-  <button class="addBtn" onclick="openForm()">+ Add Expense</button>
+    </div>
 
-  <div id="expenseList"></div>
-</div>
 
-<!-- FORM -->
-<div id="formPage" class="hidden">
-  <h3>Add Expense</h3>
 
-  <input id="item" placeholder="Item name">
-  <input id="vendor" placeholder="Vendor">
-  <input id="cost" placeholder="Total cost (RM)">
-  <input id="deposit" placeholder="Deposit paid (RM)">
-  <textarea id="desc" placeholder="Description"></textarea>
+    <!-- ================= Dashboard ================= -->
 
-  <button onclick="saveExpense()">Save</button>
-  <button onclick="closeForm()">Cancel</button>
-</div>
+    <div id="dashboard" class="screen hidden">
 
-<script type="module" src="app.js"></script>
+        <header>
+
+            <h2>Wedding Dashboard</h2>
+
+            <p>Welcome back</p>
+
+        </header>
+
+        <div class="summaryCard">
+
+            <h3>Total Budget</h3>
+
+            <h1>RM 0</h1>
+
+            <div class="progressBar">
+
+                <div id="budgetProgress"></div>
+
+            </div>
+
+            <div class="summaryNumbers">
+
+                <div>
+
+                    <span>Spent</span>
+
+                    <strong id="spentAmount">RM 0</strong>
+
+                </div>
+
+                <div>
+
+                    <span>Remaining</span>
+
+                    <strong id="remainingAmount">RM 0</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="menuGrid">
+
+            <div class="menuCard" onclick="showExpenses()">
+
+                <div class="icon">💳</div>
+
+                Expenses
+
+            </div>
+
+            <div class="menuCard">
+
+                <div class="icon">💰</div>
+
+                Savings
+
+            </div>
+
+            <div class="menuCard">
+
+                <div class="icon">🧾</div>
+
+                Receipts
+
+            </div>
+
+            <div class="menuCard">
+
+                <div class="icon">📊</div>
+
+                Reports
+
+            </div>
+
+        </div>
+
+
+
+        <div class="recent">
+
+            <h3>Recent Expenses</h3>
+
+            <div id="recentExpenseList">
+
+                No expenses yet.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= Expense Page ================= -->
+
+    <div id="expensesPage" class="screen hidden">
+
+        <div class="pageHeader">
+
+            <button onclick="backHome()">←</button>
+
+            <h2>Expenses</h2>
+
+        </div>
+
+        <button class="primaryBtn" onclick="openForm()">
+
+            + Add Expense
+
+        </button>
+
+        <div id="expenseList"></div>
+
+    </div>
+
+
+
+    <!-- ================= Add Expense ================= -->
+
+    <div id="formPage" class="screen hidden">
+
+        <div class="pageHeader">
+
+            <button onclick="closeForm()">←</button>
+
+            <h2>Add Expense</h2>
+
+        </div>
+
+
+
+        <div class="formContainer">
+
+            <label>Item</label>
+
+            <input id="item" placeholder="Photography">
+
+            <label>Vendor</label>
+
+            <input id="vendor" placeholder="Vendor name">
+
+            <label>Total Cost (RM)</label>
+
+            <input id="cost" type="number">
+
+            <label>Deposit Paid (RM)</label>
+
+            <input id="deposit" type="number">
+
+            <label>Description</label>
+
+            <textarea id="desc"></textarea>
+
+            <button class="primaryBtn" onclick="saveExpense()">
+
+                Save Expense
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <script type="module" src="app.js"></script>
 
 </body>
+
 </html>
