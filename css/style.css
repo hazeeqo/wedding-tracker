@@ -10,7 +10,7 @@ body {
 }
 
 /* ======================
-   START STATE (IMPORTANT)
+   FORCE START STATE
 ====================== */
 
 #dashboard,
@@ -74,4 +74,9 @@ body {
     border-radius: 12px;
     width: 90%;
     max-width: 400px;
+}
+
+/* HIDDEN CLASS (IMPORTANT) */
+.hidden {
+    display: none !important;
 }
