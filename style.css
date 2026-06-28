@@ -1,56 +1,219 @@
+/* =====================
+   Base Setup
+===================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
 body {
-  font-family: Arial;
-  margin: 0;
-  background: #f5f5f5;
+    background: #f6f7fb;
+    color: #222;
 }
 
-/* SPLASH */
-#splash {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: black;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
+/* =====================
+   Screen System
+===================== */
+
+.screen {
+    padding: 20px;
 }
 
-/* DASHBOARD */
-.card {
-  background: white;
-  margin: 10px;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-}
-
-/* HEADER */
-.header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* BUTTON */
-.addBtn {
-  margin: 10px;
-  padding: 10px;
-}
-
-/* HIDDEN */
 .hidden {
-  display: none;
+    display: none;
 }
 
-/* FORM */
-#formPage {
-  padding: 20px;
+/* =====================
+   Splash Screen
+===================== */
+
+#splash {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #f0f2f8);
+    text-align: center;
+}
+
+#splash .logo {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+#splash h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+#splash p {
+    color: #666;
+}
+
+/* =====================
+   Header
+===================== */
+
+header {
+    margin-bottom: 20px;
+}
+
+header h2 {
+    font-size: 22px;
+}
+
+header p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* =====================
+   Summary Card
+===================== */
+
+.summaryCard {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+}
+
+.summaryCard h1 {
+    font-size: 28px;
+    margin: 10px 0;
+}
+
+.progressBar {
+    height: 8px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+#budgetProgress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff7eb3, #ff758c);
+    transition: 0.3s;
+}
+
+.summaryNumbers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.summaryNumbers span {
+    font-size: 12px;
+    color: #777;
+}
+
+/* =====================
+   Menu Grid
+===================== */
+
+.menuGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.menuCard {
+    background: #fff;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.menuCard:hover {
+    transform: translateY(-2px);
+}
+
+.menuCard .icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+/* =====================
+   Buttons
+===================== */
+
+.primaryBtn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    color: white;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+/* =====================
+   Expenses List
+===================== */
+
+#expenseList,
+#recentExpenseList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.expenseCard {
+    background: #fff;
+    padding: 15px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* =====================
+   Page Header
+===================== */
+
+.pageHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.pageHeader button {
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* =====================
+   Form
+===================== */
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 input, textarea {
-  width: 100%;
-  margin: 5px 0;
-  padding: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
 }
