@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("App loaded");
 
     // FORCE CLEAN START
+    hideAll();
+
     showSplash();
 
     setTimeout(() => {
@@ -38,11 +40,15 @@ function backHome() {
 }
 
 function openExpenseModal() {
-    document.getElementById("expenseModal").style.display = "flex";
+    const modal = document.getElementById("expenseModal");
+    modal.style.display = "flex";
+    modal.classList.remove("hidden");
 }
 
 function closeExpenseModal() {
-    document.getElementById("expenseModal").style.display = "none";
+    const modal = document.getElementById("expenseModal");
+    modal.style.display = "none";
+    modal.classList.add("hidden");
 }
 
 window.showExpenses = showExpenses;
