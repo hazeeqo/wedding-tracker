@@ -8,7 +8,7 @@
 
     <title>Wedding Tracker</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -18,12 +18,9 @@
 
     <div id="splash">
 
-        <div class="logo">
-            💍
-        </div>
+        <div class="logo">💍</div>
 
         <h1>Wedding Tracker</h1>
-
         <p>Planning your big day made easier</p>
 
     </div>
@@ -35,43 +32,29 @@
     <div id="dashboard" class="screen hidden">
 
         <header>
-
             <h2>Wedding Dashboard</h2>
-
             <p>Welcome back</p>
-
         </header>
 
         <div class="summaryCard">
 
             <h3>Total Budget</h3>
-
             <h1>RM 0</h1>
 
             <div class="progressBar">
-
                 <div id="budgetProgress"></div>
-
             </div>
 
             <div class="summaryNumbers">
-
                 <div>
-
                     <span>Spent</span>
-
                     <strong id="spentAmount">RM 0</strong>
-
                 </div>
 
                 <div>
-
                     <span>Remaining</span>
-
                     <strong id="remainingAmount">RM 0</strong>
-
                 </div>
-
             </div>
 
         </div>
@@ -81,35 +64,23 @@
         <div class="menuGrid">
 
             <div class="menuCard" onclick="showExpenses()">
-
                 <div class="icon">💳</div>
-
                 Expenses
-
             </div>
 
             <div class="menuCard">
-
                 <div class="icon">💰</div>
-
                 Savings
-
             </div>
 
             <div class="menuCard">
-
                 <div class="icon">🧾</div>
-
                 Receipts
-
             </div>
 
             <div class="menuCard">
-
                 <div class="icon">📊</div>
-
                 Reports
-
             </div>
 
         </div>
@@ -121,34 +92,27 @@
             <h3>Recent Expenses</h3>
 
             <div id="recentExpenseList">
-
                 No expenses yet.
-
             </div>
 
         </div>
+
+        <button class="primaryBtn" onclick="openExpenseModal()">
+            + Add Expense
+        </button>
 
     </div>
 
 
 
-    <!-- ================= Expense Page ================= -->
+    <!-- ================= Expenses Page ================= -->
 
     <div id="expensesPage" class="screen hidden">
 
         <div class="pageHeader">
-
             <button onclick="backHome()">←</button>
-
             <h2>Expenses</h2>
-
         </div>
-
-        <button class="primaryBtn" onclick="openForm()">
-
-            + Add Expense
-
-        </button>
 
         <div id="expenseList"></div>
 
@@ -156,46 +120,34 @@
 
 
 
-    <!-- ================= Add Expense ================= -->
+    <!-- ================= Add Expense Modal ================= -->
 
-    <div id="formPage" class="screen hidden">
+    <div id="expenseModal" class="modal hidden">
 
-        <div class="pageHeader">
+        <div class="modalContent">
 
-            <button onclick="closeForm()">←</button>
-
-            <h2>Add Expense</h2>
-
-        </div>
-
-
-
-        <div class="formContainer">
+            <div class="modalHeader">
+                <h2>Add Expense</h2>
+                <button onclick="closeExpenseModal()">✕</button>
+            </div>
 
             <label>Item</label>
-
             <input id="item" placeholder="Photography">
 
             <label>Vendor</label>
-
             <input id="vendor" placeholder="Vendor name">
 
             <label>Total Cost (RM)</label>
-
             <input id="cost" type="number">
 
             <label>Deposit Paid (RM)</label>
-
             <input id="deposit" type="number">
 
             <label>Description</label>
-
             <textarea id="desc"></textarea>
 
             <button class="primaryBtn" onclick="saveExpense()">
-
                 Save Expense
-
             </button>
 
         </div>
@@ -203,6 +155,8 @@
     </div>
 
 
+
+    <!-- Scripts -->
 
     <script src="js/navigation.js"></script>
     <script type="module" src="js/app.js"></script>
