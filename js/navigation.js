@@ -1,91 +1,50 @@
-// ==========================
-// Navigation System (FIXED)
-// ==========================
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    // FORCE initial state
-    hideAllScreens();
+    console.log("App loaded");
+
     showSplash();
 
-    // Move to dashboard after delay
     setTimeout(() => {
         showDashboard();
     }, 2000);
 
 });
 
-
-// ==========================
-// Helper
-// ==========================
-
-function hideAllScreens() {
-
-    document.querySelectorAll(".screen").forEach(s => {
-        s.classList.add("hidden");
-    });
-
-    const splash = document.getElementById("splash");
-    if (splash) splash.classList.add("hidden");
+function hideAll() {
+    document.getElementById("splash").style.display = "none";
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("expensesPage").style.display = "none";
 }
 
-
-// ==========================
-// Screens
-// ==========================
-
 function showSplash() {
-    hideAllScreens();
-
-    const splash = document.getElementById("splash");
-    if (splash) splash.classList.remove("hidden");
+    hideAll();
+    document.getElementById("splash").style.display = "flex";
 }
 
 function showDashboard() {
-    hideAllScreens();
-
-    const dash = document.getElementById("dashboard");
-    if (dash) dash.classList.remove("hidden");
-
-    // IMPORTANT: load data if exists
-    if (window.renderAll) {
-        window.renderAll();
-    }
+    hideAll();
+    document.getElementById("dashboard").style.display = "block";
 }
 
 function showExpenses() {
-    hideAllScreens();
-
-    const exp = document.getElementById("expensesPage");
-    if (exp) exp.classList.remove("hidden");
+    hideAll();
+    document.getElementById("expensesPage").style.display = "block";
 }
 
 function backHome() {
     showDashboard();
 }
 
-
-// ==========================
-// Modal
-// ==========================
-
 function openExpenseModal() {
-    document.getElementById("expenseModal").classList.remove("hidden");
+    document.getElementById("expenseModal").style.display = "flex";
 }
 
 function closeExpenseModal() {
-    document.getElementById("expenseModal").classList.add("hidden");
+    document.getElementById("expenseModal").style.display = "none";
 }
-
-
-// ==========================
-// Expose globally
-// ==========================
 
 window.showExpenses = showExpenses;
 window.backHome = backHome;
-window.showDashboard = showDashboard;
-
 window.openExpenseModal = openExpenseModal;
 window.closeExpenseModal = closeExpenseModal;
+window.showDashboard = showDashboard;
