@@ -15,12 +15,12 @@ import {
 ========================= */
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
+    apiKey: "AIzaSyAfMWQFoIeTmfS_n6zRZvylEswOv9ZrZ-s",
     authDomain: "wedding-tracker-bed3d.firebaseapp.com",
     projectId: "wedding-tracker-bed3d",
     storageBucket: "wedding-tracker-bed3d.appspot.com",
-    messagingSenderId: "YOUR_ID",
-    appId: "YOUR_APP_ID"
+    messagingSenderId: "41981843613",
+    appId: "1:41981843613:web:56865dcb2ed976dd905c74"
 };
 
 /* =========================
