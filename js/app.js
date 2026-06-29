@@ -1,3 +1,4 @@
+
 import {
     db,
     collection,
@@ -11,29 +12,28 @@ import {
 let expenses = [];
 let editId = null;
 
-/* SPLASH SAFE */
+/* SPLASH */
 window.addEventListener("load", () => {
 
     setTimeout(() => {
-
         document.getElementById("splash").style.display = "none";
         document.getElementById("app").classList.remove("hidden");
-
-    }, 1200);
+    }, 1500);
 });
 
 /* MODAL */
-function openModal() {
-    document.getElementById("modal").classList.remove("hidden");
+function openAddExpense() {
+    document.getElementById("expenseModal").classList.remove("hidden");
 }
-function closeModal() {
-    document.getElementById("modal").classList.add("hidden");
+
+function closeAddExpense() {
+    document.getElementById("expenseModal").classList.add("hidden");
     clearForm();
     editId = null;
 }
 
-window.openModal = openModal;
-window.closeModal = closeModal;
+window.openAddExpense = openAddExpense;
+window.closeAddExpense = closeAddExpense;
 
 /* FIREBASE */
 onSnapshot(collection(db, "expenses"), (snapshot) => {
@@ -44,8 +44,8 @@ onSnapshot(collection(db, "expenses"), (snapshot) => {
         expenses.push({ id: d.id, ...d.data() });
     });
 
-    render();
-    dashboard();
+    renderExpenses();
+    updateDashboard();
 });
 
 /* SAVE */
@@ -68,17 +68,18 @@ async function saveExpense() {
 
     if (editId) {
         await updateDoc(doc(db, "expenses", editId), data);
+        editId = null;
     } else {
         await addDoc(collection(db, "expenses"), data);
     }
 
-    closeModal();
+    closeAddExpense();
 }
 
 window.saveExpense = saveExpense;
 
 /* RENDER */
-function render() {
+function renderExpenses() {
 
     const list = document.getElementById("expenseList");
     list.innerHTML = "";
@@ -99,12 +100,39 @@ function render() {
 }
 
 /* DASHBOARD */
-function dashboard() {
+function updateDashboard() {
 
-    let total = 0;
+    let totalSpent = 0;
 
-    expenses.forEach(e => total += e.paid);
+    expenses.forEach(e => totalSpent += Number(e.paid || 0));
 
-    document.getElementById("totalSpent").innerText = "RM " + total;
-    document.getElementById("totalRemaining").innerText = "RM " + (0 - total);
+    document.getElementById("totalSpent").innerText = "RM " + totalSpent;
+    document.getElementById("totalRemaining").innerText = "RM " + (0 - totalSpent);
+
+    const recent = document.getElementById("recentExpenses");
+    if (recent) {
+
+        recent.innerHTML = "";
+
+        expenses.slice(-3).reverse().forEach(e => {
+
+            const div = document.createElement("div");
+            div.className = "expenseItem";
+
+            div.innerHTML = `
+                <b>${e.item}</b><br>
+                RM ${e.paid}
+            `;
+
+            recent.appendChild(div);
+        });
+    }
+}
+
+/* CLEAR */
+function clearForm() {
+
+    ["item","vendor","cost","paid"].forEach(id => {
+        document.getElementById(id).value = "";
+    });
 }
