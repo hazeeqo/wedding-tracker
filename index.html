@@ -2,22 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Tracker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Tracker</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
 <!-- SPLASH -->
-<div id="splash" class="splash">
+<div id="splash">
     <h2>💍 Wedding Tracker</h2>
 </div>
 
-<!-- APP -->
-<div id="app" class="app hidden">
+<!-- APP WRAPPER -->
+<div id="app" class="hidden">
 
     <!-- DASHBOARD -->
     <section id="dashboard" class="screen active">
@@ -25,7 +25,7 @@
         <h2>Dashboard</h2>
 
         <div class="card">
-            <h3>Budget</h3>
+            <h3>Total Budget</h3>
             <input id="budgetInput" type="number" placeholder="Enter budget">
         </div>
 
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <h3>Recent</h3>
+        <h3>Recent Expenses</h3>
         <div id="recentExpenses"></div>
 
     </section>
@@ -55,7 +55,7 @@
 
         <h2>Expenses</h2>
 
-        <button onclick="openModal()">+ Add Expense</button>
+        <button onclick="openAddExpense()">+ Add Expense</button>
 
         <div id="expenseList"></div>
 
@@ -64,7 +64,7 @@
 </div>
 
 <!-- MODAL -->
-<div id="modal" class="modal hidden">
+<div id="expenseModal" class="modal hidden">
 
     <div class="modalBox">
 
@@ -78,6 +78,7 @@
             <option value="Food">Food</option>
             <option value="Outfit">Outfit</option>
             <option value="Decoration">Decoration</option>
+            <option value="Photography">Photography</option>
             <option value="Other">Other</option>
         </select>
 
@@ -85,7 +86,7 @@
         <input id="paid" type="number" placeholder="Paid">
 
         <button onclick="saveExpense()">Save</button>
-        <button onclick="closeModal()">Close</button>
+        <button onclick="closeAddExpense()">Close</button>
 
     </div>
 
