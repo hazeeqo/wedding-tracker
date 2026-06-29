@@ -41,6 +41,54 @@ window.addEventListener("load", () => {
 });
 
 
+function updateDashboard() {
+
+    let totalSpent = 0;
+
+    expenses.forEach(e => {
+        totalSpent += Number(e.paid || 0);
+    });
+
+    const budget = Number(document.getElementById("budgetInput")?.value || 0);
+
+    const remaining = budget - totalSpent;
+
+    document.getElementById("totalSpent").innerText = `RM ${totalSpent}`;
+    document.getElementById("totalRemaining").innerText = `RM ${remaining}`;
+
+    // progress
+    const percent = budget > 0 ? (totalSpent / budget) * 100 : 0;
+
+    const progress = document.getElementById("progressFill");
+    if (progress) {
+        progress.style.width = `${Math.min(percent, 100)}%`;
+    }
+
+    // recent expenses
+    const recent = document.getElementById("recentExpenses");
+
+    if (recent) {
+
+        recent.innerHTML = "";
+
+        const latest = [...expenses].slice(-3).reverse();
+
+        latest.forEach(e => {
+
+            const div = document.createElement("div");
+            div.className = "expenseItem";
+
+            div.innerHTML = `
+                <div>
+                    <b>${e.item}</b><br>
+                    RM ${e.paid}
+                </div>
+            `;
+
+            recent.appendChild(div);
+        });
+    }
+}
 /* =========================
    NAVIGATION
 ========================= */
