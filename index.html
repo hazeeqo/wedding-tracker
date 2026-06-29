@@ -11,17 +11,15 @@
 
 <body>
 
-<!-- ================= SPLASH ================= -->
+<!-- ================= SPLASH SCREEN ================= -->
 <div id="splash" class="splash">
-    <div class="splashContent">
-        <div class="logo">💍</div>
-        <h1>Wedding Tracker</h1>
-        <p>Planning made simple</p>
-    </div>
+    <h2>💍 Wedding Tracker</h2>
 </div>
 
-<!-- ================= APP ================= -->
+
+<!-- ================= MAIN APP WRAPPER (IMPORTANT) ================= -->
 <div id="app" class="app hidden">
+
 
     <!-- ================= DASHBOARD ================= -->
     <section id="dashboard" class="screen active">
@@ -50,36 +48,25 @@
             </div>
         </div>
 
-        <h3 class="sectionTitle">Recent Expenses</h3>
+        <h3>Recent Expenses</h3>
         <div id="recentExpenses"></div>
 
     </section>
 
-  
 
-    <!-- ================= EXPENSES ================= -->
+    <!-- ================= EXPENSE LIST ================= -->
     <section id="expenses" class="screen">
 
         <h2>Expenses</h2>
+
+        <button onclick="openAddExpense()">+ Add Expense</button>
 
         <div id="expenseList"></div>
 
     </section>
 
-    <!-- ================= RECEIPTS (placeholder) ================= -->
-    <section id="receipts" class="screen">
-
-        <h2>Receipts</h2>
-        <p>No receipts yet</p>
-
-    </section>
-
 </div>
 
-<!-- ================= FLOATING ACTION BUTTON ================= -->
-<button id="fab" onclick="openAddExpense()">
-    +
-</button>
 
 <!-- ================= ADD EXPENSE MODAL ================= -->
 <div id="expenseModal" class="modal hidden">
@@ -91,7 +78,7 @@
         <input id="item" placeholder="Item">
         <input id="vendor" placeholder="Vendor">
 
-        <!-- NEW: CATEGORY -->
+        <!-- CATEGORY -->
         <select id="category">
             <option value="Venue">Venue</option>
             <option value="Food">Food</option>
@@ -101,10 +88,10 @@
             <option value="Other">Other</option>
         </select>
 
-        <input id="cost" type="number" placeholder="Total Cost">
-        <input id="paid" type="number" placeholder="Paid Amount">
+        <input id="cost" type="number" placeholder="Cost">
+        <input id="paid" type="number" placeholder="Paid">
 
-        <textarea id="description" placeholder="Description"></textarea>
+        <textarea id="description" placeholder="Notes"></textarea>
 
         <button onclick="saveExpense()">Save</button>
         <button onclick="closeAddExpense()">Cancel</button>
@@ -113,15 +100,8 @@
 
 </div>
 
-<!-- ================= BOTTOM NAV ================= -->
-<nav class="bottomNav">
 
-    <button onclick="showTab('dashboard')">Home</button>
-    <button onclick="showTab('expenses')">Expenses</button>
-    <button onclick="showTab('receipts')">Receipts</button>
-
-</nav>
-
+<!-- ================= SCRIPT ================= -->
 <script type="module" src="js/app.js"></script>
 
 </body>
