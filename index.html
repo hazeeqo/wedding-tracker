@@ -11,23 +11,21 @@
 
 <body>
 
-<!-- ================= SPLASH SCREEN ================= -->
+<!-- SPLASH -->
 <div id="splash" class="splash">
     <h2>💍 Wedding Tracker</h2>
 </div>
 
-
-<!-- ================= MAIN APP WRAPPER (IMPORTANT) ================= -->
+<!-- APP -->
 <div id="app" class="app hidden">
 
-
-    <!-- ================= DASHBOARD ================= -->
+    <!-- DASHBOARD -->
     <section id="dashboard" class="screen active">
 
         <h2>Dashboard</h2>
 
         <div class="card">
-            <h3>Total Budget</h3>
+            <h3>Budget</h3>
             <input id="budgetInput" type="number" placeholder="Enter budget">
         </div>
 
@@ -42,24 +40,22 @@
         </div>
 
         <div class="card">
-            <h3>Progress</h3>
             <div class="progressBar">
                 <div id="progressFill"></div>
             </div>
         </div>
 
-        <h3>Recent Expenses</h3>
+        <h3>Recent</h3>
         <div id="recentExpenses"></div>
 
     </section>
 
-
-    <!-- ================= EXPENSE LIST ================= -->
+    <!-- EXPENSES -->
     <section id="expenses" class="screen">
 
         <h2>Expenses</h2>
 
-        <button onclick="openAddExpense()">+ Add Expense</button>
+        <button onclick="openModal()">+ Add Expense</button>
 
         <div id="expenseList"></div>
 
@@ -67,9 +63,8 @@
 
 </div>
 
-
-<!-- ================= ADD EXPENSE MODAL ================= -->
-<div id="expenseModal" class="modal hidden">
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
 
     <div class="modalBox">
 
@@ -78,30 +73,24 @@
         <input id="item" placeholder="Item">
         <input id="vendor" placeholder="Vendor">
 
-        <!-- CATEGORY -->
         <select id="category">
             <option value="Venue">Venue</option>
             <option value="Food">Food</option>
             <option value="Outfit">Outfit</option>
             <option value="Decoration">Decoration</option>
-            <option value="Photography">Photography</option>
             <option value="Other">Other</option>
         </select>
 
         <input id="cost" type="number" placeholder="Cost">
         <input id="paid" type="number" placeholder="Paid">
 
-        <textarea id="description" placeholder="Notes"></textarea>
-
         <button onclick="saveExpense()">Save</button>
-        <button onclick="closeAddExpense()">Cancel</button>
+        <button onclick="closeModal()">Close</button>
 
     </div>
 
 </div>
 
-
-<!-- ================= SCRIPT ================= -->
 <script type="module" src="js/app.js"></script>
 
 </body>
