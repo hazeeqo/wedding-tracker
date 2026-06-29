@@ -158,20 +158,23 @@ loadExpenses();
    SAVE / EDIT EXPENSE
 ========================= */
 
+
 async function saveExpense() {
 
     const item = document.getElementById("item").value;
     const vendor = document.getElementById("vendor").value;
+    const category = document.getElementById("category").value; // NEW
     const cost = Number(document.getElementById("cost").value);
     const paid = Number(document.getElementById("paid").value);
 
     const data = {
         item,
         vendor,
+        category, // NEW
         cost,
         paid,
         remaining: cost - paid,
-        updatedAt: new Date()
+        createdAt: new Date()
     };
 
     if (editId) {
@@ -181,13 +184,11 @@ async function saveExpense() {
 
     } else {
 
-        await addDoc(collection(db, "expenses"), {
-            ...data,
-            createdAt: new Date()
-        });
+        await addDoc(collection(db, "expenses"), data);
     }
 
     closeAddExpense();
+    clearForm();
 }
 
 window.saveExpense = saveExpense;
@@ -231,10 +232,10 @@ window.deleteExpense = deleteExpense;
    RENDER EXPENSES
 ========================= */
 
+
 function renderExpenses() {
 
     const list = document.getElementById("expenseList");
-    if (!list) return;
 
     list.innerHTML = "";
 
@@ -246,7 +247,12 @@ function renderExpenses() {
         div.innerHTML = `
             <div>
                 <b>${e.item}</b><br>
+
+                <!-- CATEGORY BADGE -->
+                <small>${e.category || "Other"}</small><br>
+
                 ${e.vendor}<br>
+
                 RM ${e.cost} | Paid RM ${e.paid} | Left RM ${e.remaining}
             </div>
 
