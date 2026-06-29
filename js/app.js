@@ -9,19 +9,33 @@ import {
     updateDoc
 } from "./firebase.js";
 
+
 let expenses = [];
 let editId = null;
 
-/* SPLASH */
+
+/* =========================
+   SPLASH (SAFE)
+========================= */
+
 window.addEventListener("load", () => {
 
     setTimeout(() => {
-        document.getElementById("splash").style.display = "none";
-        document.getElementById("app").classList.remove("hidden");
-    }, 1500);
+
+        const splash = document.getElementById("splash");
+        const app = document.getElementById("app");
+
+        if (splash) splash.style.display = "none";
+        if (app) app.classList.remove("hidden");
+
+    }, 1200);
 });
 
-/* MODAL */
+
+/* =========================
+   MODAL
+========================= */
+
 function openAddExpense() {
     document.getElementById("expenseModal").classList.remove("hidden");
 }
@@ -35,20 +49,31 @@ function closeAddExpense() {
 window.openAddExpense = openAddExpense;
 window.closeAddExpense = closeAddExpense;
 
-/* FIREBASE */
+
+/* =========================
+   FIREBASE
+========================= */
+
 onSnapshot(collection(db, "expenses"), (snapshot) => {
 
     expenses = [];
 
-    snapshot.forEach(d => {
-        expenses.push({ id: d.id, ...d.data() });
+    snapshot.forEach(docSnap => {
+        expenses.push({
+            id: docSnap.id,
+            ...docSnap.data()
+        });
     });
 
     renderExpenses();
     updateDashboard();
 });
 
-/* SAVE */
+
+/* =========================
+   SAVE EXPENSE
+========================= */
+
 async function saveExpense() {
 
     const item = document.getElementById("item").value;
@@ -68,6 +93,7 @@ async function saveExpense() {
 
     if (editId) {
         await updateDoc(doc(db, "expenses", editId), data);
+        editId = null;
     } else {
         await addDoc(collection(db, "expenses"), data);
     }
@@ -77,10 +103,16 @@ async function saveExpense() {
 
 window.saveExpense = saveExpense;
 
-/* RENDER */
+
+/* =========================
+   RENDER EXPENSES
+========================= */
+
 function renderExpenses() {
 
     const list = document.getElementById("expenseList");
+    if (!list) return;
+
     list.innerHTML = "";
 
     expenses.forEach(e => {
@@ -90,7 +122,7 @@ function renderExpenses() {
 
         div.innerHTML = `
             <b>${e.item}</b><br>
-            ${e.vendor}<br>
+            ${e.category}<br>
             RM ${e.cost}
         `;
 
@@ -98,22 +130,44 @@ function renderExpenses() {
     });
 }
 
-/* DASHBOARD */
+
+/* =========================
+   DASHBOARD UPGRADE
+========================= */
+
 function updateDashboard() {
 
     let totalSpent = 0;
 
-    expenses.forEach(e => totalSpent += Number(e.paid || 0));
+    expenses.forEach(e => {
+        totalSpent += Number(e.paid || 0);
+    });
 
-    document.getElementById("totalSpent").innerText = "RM " + totalSpent;
-    document.getElementById("totalRemaining").innerText = "RM " + (0 - totalSpent);
+    const budget = Number(document.getElementById("budgetInput")?.value || 0);
+
+    const remaining = budget - totalSpent;
+
+    const spentEl = document.getElementById("totalSpent");
+    const remainEl = document.getElementById("totalRemaining");
+    const progress = document.getElementById("progressFill");
+
+    if (spentEl) spentEl.innerText = `RM ${totalSpent}`;
+    if (remainEl) remainEl.innerText = `RM ${remaining}`;
+
+    if (progress) {
+        const percent = budget > 0 ? (totalSpent / budget) * 100 : 0;
+        progress.style.width = `${Math.min(percent, 100)}%`;
+    }
 
     const recent = document.getElementById("recentExpenses");
+
     if (recent) {
 
         recent.innerHTML = "";
 
-        expenses.slice(-3).reverse().forEach(e => {
+        const latest = [...expenses].slice(-3).reverse();
+
+        latest.forEach(e => {
 
             const div = document.createElement("div");
             div.className = "expenseItem";
@@ -128,9 +182,27 @@ function updateDashboard() {
     }
 }
 
-/* CLEAR */
+
+/* =========================
+   INPUT LISTENER
+========================= */
+
+document.addEventListener("input", (e) => {
+
+    if (e.target.id === "budgetInput") {
+        updateDashboard();
+    }
+});
+
+
+/* =========================
+   CLEAR FORM
+========================= */
+
 function clearForm() {
-    ["item","vendor","cost","paid"].forEach(id => {
-        document.getElementById(id).value = "";
+
+    ["item", "vendor", "cost", "paid"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
     });
 }
