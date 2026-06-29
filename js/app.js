@@ -40,7 +40,13 @@ window.addEventListener("load", () => {
     }, 1500);
 });
 
+document.addEventListener("input", (e) => {
 
+    if (e.target.id === "budgetInput") {
+        updateDashboard();
+    }
+
+});
 function updateDashboard() {
 
     let totalSpent = 0;
@@ -141,6 +147,7 @@ function loadExpenses() {
         });
 
         renderExpenses();
+        updateDashboard(); // 👈 ADD THIS
     });
 }
 
