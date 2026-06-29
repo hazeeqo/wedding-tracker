@@ -1,3 +1,22 @@
+window.addEventListener("load", () => {
+
+    const splash = document.getElementById("splash");
+    const dashboard = document.getElementById("dashboard");
+
+    // FORCE START STATE
+    splash.classList.remove("hidden");
+    splash.style.display = "flex";
+
+    dashboard.classList.remove("active");
+
+    setTimeout(() => {
+
+        splash.classList.add("hidden");
+        dashboard.classList.add("active");
+
+    }, 2000);
+
+});
 let expenses = [];
 
 function showTab(tab) {
