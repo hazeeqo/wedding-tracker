@@ -18,19 +18,26 @@ let editId = null;
    SPLASH (SAFE)
 ========================= */
 
+
 window.addEventListener("load", () => {
+
+    const splash = document.getElementById("splash");
+    const app = document.getElementById("app");
 
     setTimeout(() => {
 
-        const splash = document.getElementById("splash");
-        const app = document.getElementById("app");
+        if (!splash || !app) return;
 
-        if (splash) splash.style.display = "none";
-        if (app) app.classList.remove("hidden");
+        splash.classList.add("hide");
 
-    }, 1200);
+        setTimeout(() => {
+            splash.style.display = "none";
+            app.classList.remove("hidden");
+        }, 400); // matches CSS fade
+
+    }, 1200); // splash duration
+
 });
-
 
 /* =========================
    MODAL
