@@ -30,7 +30,7 @@
 
         <div class="card">
             <h3>Total Budget</h3>
-            <p id="totalBudget">RM 0</p>
+            <input id="budgetInput" type="number" placeholder="Enter budget">
         </div>
 
         <div class="card">
@@ -43,10 +43,19 @@
             <p id="totalRemaining">RM 0</p>
         </div>
 
+        <div class="card">
+            <h3>Progress</h3>
+            <div class="progressBar">
+                <div id="progressFill"></div>
+            </div>
+        </div>
+
         <h3 class="sectionTitle">Recent Expenses</h3>
         <div id="recentExpenses"></div>
 
     </section>
+
+  
 
     <!-- ================= EXPENSES ================= -->
     <section id="expenses" class="screen">
