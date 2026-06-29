@@ -3,16 +3,11 @@ import {
     getFirestore,
     collection,
     addDoc,
-    getDocs,
+    onSnapshot,
     deleteDoc,
     doc,
-    onSnapshot
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-/* =========================
-   YOUR FIREBASE CONFIG
-   (from Firebase Console)
-========================= */
 
 const firebaseConfig = {
     apiKey: "AIzaSyAfMWQFoIeTmfS_n6zRZvylEswOv9ZrZ-s",
@@ -30,4 +25,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export { db, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot };
+export {
+    db,
+    collection,
+    addDoc,
+    onSnapshot,
+    deleteDoc,
+    doc,
+    updateDoc
+};
