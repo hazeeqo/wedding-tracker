@@ -16,7 +16,7 @@
     <h2>💍 Wedding Tracker</h2>
 </div>
 
-<!-- APP -->
+<!-- APP WRAPPER -->
 <div id="app" class="hidden">
 
     <!-- DASHBOARD -->
@@ -40,6 +40,7 @@
         </div>
 
         <div class="card">
+            <h3>Progress</h3>
             <div class="progressBar">
                 <div id="progressFill"></div>
             </div>
@@ -49,6 +50,7 @@
         <div id="recentExpenses"></div>
 
     </section>
+
 
     <!-- EXPENSES -->
     <section id="expenses" class="screen">
@@ -63,6 +65,7 @@
 
 </div>
 
+
 <!-- MODAL -->
 <div id="expenseModal" class="modal hidden">
 
@@ -73,7 +76,6 @@
         <input id="item" placeholder="Item">
         <input id="vendor" placeholder="Vendor">
 
-        <!-- (IMPORTANT: category was NOT fully used yet) -->
         <select id="category">
             <option value="Venue">Venue</option>
             <option value="Food">Food</option>
@@ -92,6 +94,7 @@
     </div>
 
 </div>
+
 
 <script type="module" src="js/app.js"></script>
 
