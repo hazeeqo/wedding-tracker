@@ -1,4 +1,8 @@
 
+/* =========================
+   FIREBASE IMPORTS
+========================= */
+
 import {
     db,
     collection,
@@ -11,7 +15,7 @@ import {
 
 
 /* =========================
-   STATE
+   GLOBAL STATE
 ========================= */
 
 let expenses = [];
@@ -19,82 +23,49 @@ let editId = null;
 
 
 /* =========================
-   SPLASH SCREEN
+   SAFE SPLASH (NO STUCK EVER)
 ========================= */
 
-window.addEventListener("load", () => {
+function startApp() {
 
     const splash = document.getElementById("splash");
     const app = document.getElementById("app");
 
-    splash.style.display = "flex";
-    app.classList.add("hidden");
+    if (splash) splash.style.display = "flex";
+    if (app) app.classList.add("hidden");
 
     setTimeout(() => {
 
-        splash.style.display = "none";
-        app.classList.remove("hidden");
+        if (splash) splash.style.display = "none";
+        if (app) app.classList.remove("hidden");
 
         showTab("dashboard");
 
     }, 1500);
-});
-
-document.addEventListener("input", (e) => {
-
-    if (e.target.id === "budgetInput") {
-        updateDashboard();
-    }
-
-});
-function updateDashboard() {
-
-    let totalSpent = 0;
-
-    expenses.forEach(e => {
-        totalSpent += Number(e.paid || 0);
-    });
-
-    const budget = Number(document.getElementById("budgetInput")?.value || 0);
-
-    const remaining = budget - totalSpent;
-
-    document.getElementById("totalSpent").innerText = `RM ${totalSpent}`;
-    document.getElementById("totalRemaining").innerText = `RM ${remaining}`;
-
-    // progress
-    const percent = budget > 0 ? (totalSpent / budget) * 100 : 0;
-
-    const progress = document.getElementById("progressFill");
-    if (progress) {
-        progress.style.width = `${Math.min(percent, 100)}%`;
-    }
-
-    // recent expenses
-    const recent = document.getElementById("recentExpenses");
-
-    if (recent) {
-
-        recent.innerHTML = "";
-
-        const latest = [...expenses].slice(-3).reverse();
-
-        latest.forEach(e => {
-
-            const div = document.createElement("div");
-            div.className = "expenseItem";
-
-            div.innerHTML = `
-                <div>
-                    <b>${e.item}</b><br>
-                    RM ${e.paid}
-                </div>
-            `;
-
-            recent.appendChild(div);
-        });
-    }
 }
+
+
+/* =========================
+   START APP (SAFE WRAPPER)
+========================= */
+
+window.addEventListener("load", () => {
+
+    try {
+        startApp();
+    } catch (err) {
+        console.error("Startup error:", err);
+
+        // FAIL SAFE → ALWAYS SHOW APP
+        const splash = document.getElementById("splash");
+        const app = document.getElementById("app");
+
+        if (splash) splash.style.display = "none";
+        if (app) app.classList.remove("hidden");
+    }
+});
+
+
 /* =========================
    NAVIGATION
 ========================= */
@@ -105,14 +76,18 @@ function showTab(tab) {
         s.classList.remove("active");
     });
 
-    document.getElementById(tab).classList.add("active");
+    const target = document.getElementById(tab);
+
+    if (target) {
+        target.classList.add("active");
+    }
 }
 
 window.showTab = showTab;
 
 
 /* =========================
-   MODAL
+   MODAL CONTROL
 ========================= */
 
 function openAddExpense() {
@@ -130,25 +105,32 @@ window.closeAddExpense = closeAddExpense;
 
 
 /* =========================
-   FIREBASE LIVE LOAD
+   FIREBASE LIVE LISTENER
 ========================= */
 
 function loadExpenses() {
 
-    onSnapshot(collection(db, "expenses"), (snapshot) => {
+    try {
 
-        expenses = [];
+        onSnapshot(collection(db, "expenses"), (snapshot) => {
 
-        snapshot.forEach(docSnap => {
-            expenses.push({
-                id: docSnap.id,
-                ...docSnap.data()
+            expenses = [];
+
+            snapshot.forEach(docSnap => {
+                expenses.push({
+                    id: docSnap.id,
+                    ...docSnap.data()
+                });
             });
+
+            renderExpenses();
+            updateDashboard();
+
         });
 
-        renderExpenses();
-        updateDashboard(); // 👈 ADD THIS
-    });
+    } catch (err) {
+        console.error("Firestore error:", err);
+    }
 }
 
 loadExpenses();
@@ -158,37 +140,44 @@ loadExpenses();
    SAVE / EDIT EXPENSE
 ========================= */
 
-
 async function saveExpense() {
 
-    const item = document.getElementById("item").value;
-    const vendor = document.getElementById("vendor").value;
-    const category = document.getElementById("category").value; // NEW
-    const cost = Number(document.getElementById("cost").value);
-    const paid = Number(document.getElementById("paid").value);
+    try {
 
-    const data = {
-        item,
-        vendor,
-        category, // NEW
-        cost,
-        paid,
-        remaining: cost - paid,
-        createdAt: new Date()
-    };
+        const item = document.getElementById("item").value;
+        const vendor = document.getElementById("vendor").value;
+        const category = document.getElementById("category").value;
+        const cost = Number(document.getElementById("cost").value);
+        const paid = Number(document.getElementById("paid").value);
 
-    if (editId) {
+        const data = {
+            item,
+            vendor,
+            category,
+            cost,
+            paid,
+            remaining: cost - paid,
+            updatedAt: new Date()
+        };
 
-        await updateDoc(doc(db, "expenses", editId), data);
-        editId = null;
+        if (editId) {
 
-    } else {
+            await updateDoc(doc(db, "expenses", editId), data);
+            editId = null;
 
-        await addDoc(collection(db, "expenses"), data);
+        } else {
+
+            await addDoc(collection(db, "expenses"), {
+                ...data,
+                createdAt: new Date()
+            });
+        }
+
+        closeAddExpense();
+
+    } catch (err) {
+        console.error("Save error:", err);
     }
-
-    closeAddExpense();
-    clearForm();
 }
 
 window.saveExpense = saveExpense;
@@ -207,6 +196,7 @@ function editExpense(id) {
 
     document.getElementById("item").value = exp.item;
     document.getElementById("vendor").value = exp.vendor;
+    document.getElementById("category").value = exp.category || "Other";
     document.getElementById("cost").value = exp.cost;
     document.getElementById("paid").value = exp.paid;
 
@@ -222,7 +212,11 @@ window.editExpense = editExpense;
 
 async function deleteExpense(id) {
 
-    await deleteDoc(doc(db, "expenses", id));
+    try {
+        await deleteDoc(doc(db, "expenses", id));
+    } catch (err) {
+        console.error("Delete error:", err);
+    }
 }
 
 window.deleteExpense = deleteExpense;
@@ -232,10 +226,10 @@ window.deleteExpense = deleteExpense;
    RENDER EXPENSES
 ========================= */
 
-
 function renderExpenses() {
 
     const list = document.getElementById("expenseList");
+    if (!list) return;
 
     list.innerHTML = "";
 
@@ -247,12 +241,8 @@ function renderExpenses() {
         div.innerHTML = `
             <div>
                 <b>${e.item}</b><br>
-
-                <!-- CATEGORY BADGE -->
                 <small>${e.category || "Other"}</small><br>
-
                 ${e.vendor}<br>
-
                 RM ${e.cost} | Paid RM ${e.paid} | Left RM ${e.remaining}
             </div>
 
@@ -268,13 +258,68 @@ function renderExpenses() {
 
 
 /* =========================
-   CLEAR FORM
+   DASHBOARD (SAFE VERSION)
+========================= */
+
+function updateDashboard() {
+
+    let totalSpent = 0;
+
+    expenses.forEach(e => {
+        totalSpent += Number(e.paid || 0);
+    });
+
+    const budgetInput = document.getElementById("budgetInput");
+    const budget = Number(budgetInput ? budgetInput.value : 0);
+
+    const remaining = budget - totalSpent;
+
+    const spentEl = document.getElementById("totalSpent");
+    const remainEl = document.getElementById("totalRemaining");
+    const bar = document.getElementById("progressFill");
+
+    if (spentEl) spentEl.innerText = `RM ${totalSpent}`;
+    if (remainEl) remainEl.innerText = `RM ${remaining}`;
+
+    if (bar) {
+        const percent = budget > 0 ? (totalSpent / budget) * 100 : 0;
+        bar.style.width = Math.min(percent, 100) + "%";
+    }
+
+    const recent = document.getElementById("recentExpenses");
+
+    if (recent) {
+
+        recent.innerHTML = "";
+
+        [...expenses].slice(-3).reverse().forEach(e => {
+
+            const div = document.createElement("div");
+            div.className = "expenseItem";
+
+            div.innerHTML = `
+                <div>
+                    <b>${e.item}</b><br>
+                    RM ${e.paid}
+                </div>
+            `;
+
+            recent.appendChild(div);
+        });
+    }
+}
+
+
+/* =========================
+   FORM RESET
 ========================= */
 
 function clearForm() {
 
-    document.getElementById("item").value = "";
-    document.getElementById("vendor").value = "";
-    document.getElementById("cost").value = "";
-    document.getElementById("paid").value = "";
+    const ids = ["item", "vendor", "category", "cost", "paid"];
+
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+    });
 }
