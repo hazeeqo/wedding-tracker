@@ -11,111 +11,83 @@
 
 <body>
 
-<!-- Splash -->
-<div id="splash">
-    <div class="logo">💍</div>
-    <h1>Wedding Tracker</h1>
-    <p>Planning your big day made easier</p>
-</div>
+<!-- ================= APP WRAPPER ================= -->
+<div class="app">
 
-<!-- Dashboard -->
-<div id="dashboard">
+    <!-- ================= DASHBOARD ================= -->
+    <section id="dashboard" class="screen active">
 
-    <header>
-        <h2>Wedding Dashboard</h2>
-        <p>Welcome back</p>
-    </header>
+        <h2>Dashboard</h2>
 
-    <div class="summaryCard">
-        <h3>Total Budget</h3>
-        <h1>RM 0</h1>
-
-        <div class="progressBar">
-            <div id="budgetProgress"></div>
+        <div class="card">
+            <h3>Total Budget</h3>
+            <p>RM 0</p>
         </div>
 
-        <div class="summaryNumbers">
-            <div>
-                <span>Spent</span>
-                <strong id="spentAmount">RM 0</strong>
-            </div>
-            <div>
-                <span>Remaining</span>
-                <strong id="remainingAmount">RM 0</strong>
-            </div>
-        </div>
-    </div>
-
-    <div class="menuGrid">
-
-        <div class="menuCard" onclick="showExpenses()">
-            <div class="icon">💳</div>
-            Expenses
+        <div class="card">
+            <h3>Spent</h3>
+            <p>RM 0</p>
         </div>
 
-        <div class="menuCard">💰 Savings</div>
-        <div class="menuCard">🧾 Receipts</div>
-        <div class="menuCard">📊 Reports</div>
+        <div class="card">
+            <h3>Remaining</h3>
+            <p>RM 0</p>
+        </div>
 
-    </div>
+    </section>
 
-    <div class="recent">
-        <h3>Recent Expenses</h3>
-        <div id="recentExpenseList">No expenses yet.</div>
-    </div>
+    <!-- ================= EXPENSES ================= -->
+    <section id="expenses" class="screen">
 
-    <button class="primaryBtn" onclick="openExpenseModal()">
-        + Add Expense
-    </button>
-
-</div>
-
-<!-- Expenses Page -->
-<div id="expensesPage">
-
-    <div class="pageHeader">
-        <button onclick="backHome()">←</button>
         <h2>Expenses</h2>
-    </div>
 
-    <div id="expenseList"></div>
+        <div id="expenseList"></div>
 
-</div>
+    </section>
 
-<!-- Modal -->
-<div id="expenseModal" class="hidden">
+    <!-- ================= RECEIPTS (placeholder) ================= -->
+    <section id="receipts" class="screen">
 
-    <div class="modalContent">
+        <h2>Receipts</h2>
 
-        <div class="modalHeader">
-            <h2>Add Expense</h2>
-            <button onclick="closeExpenseModal()">✕</button>
-        </div>
+        <p>No receipts yet</p>
 
-        <label>Item</label>
-        <input id="item">
-
-        <label>Vendor</label>
-        <input id="vendor">
-
-        <label>Total Cost</label>
-        <input id="cost" type="number">
-
-        <label>Deposit</label>
-        <input id="deposit" type="number">
-
-        <label>Description</label>
-        <textarea id="desc"></textarea>
-
-        <button class="primaryBtn" onclick="saveExpense()">
-            Save Expense
-        </button>
-
-    </div>
+    </section>
 
 </div>
 
-<script src="js/navigation.js"></script>
+<!-- ================= ADD BUTTON ================= -->
+<button class="fab" onclick="openAddExpense()">
+    +
+</button>
+
+<!-- ================= MODAL ================= -->
+<div id="expenseModal" class="modal hidden">
+
+    <div class="modalBox">
+
+        <h3>Add Expense</h3>
+
+        <input id="item" placeholder="Item">
+        <input id="vendor" placeholder="Vendor">
+        <input id="cost" type="number" placeholder="Cost">
+
+        <button onclick="saveExpense()">Save</button>
+        <button onclick="closeAddExpense()">Close</button>
+
+    </div>
+
+</div>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottomNav">
+
+    <button onclick="showTab('dashboard')">Home</button>
+    <button onclick="showTab('expenses')">Expenses</button>
+    <button onclick="showTab('receipts')">Receipts</button>
+
+</nav>
+
 <script src="js/app.js"></script>
 
 </body>
