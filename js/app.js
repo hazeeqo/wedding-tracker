@@ -1,7 +1,21 @@
-let expenses = [];
+
+import {
+    db,
+    collection,
+    addDoc,
+    onSnapshot
+} from "./firebase.js";
+
 
 /* =========================
-   STARTUP (SPLASH FIX)
+   GLOBAL STATE
+========================= */
+
+let expenses = [];
+
+
+/* =========================
+   SPLASH SCREEN CONTROL
 ========================= */
 
 window.addEventListener("load", () => {
@@ -9,7 +23,6 @@ window.addEventListener("load", () => {
     const splash = document.getElementById("splash");
     const app = document.getElementById("app");
 
-    // show splash first (guaranteed)
     splash.style.display = "flex";
     app.classList.add("hidden");
 
@@ -18,7 +31,6 @@ window.addEventListener("load", () => {
         splash.style.display = "none";
         app.classList.remove("hidden");
 
-        // default screen
         showTab("dashboard");
 
     }, 2000);
@@ -37,7 +49,8 @@ function showTab(tab) {
         screen.classList.remove("active");
     });
 
-    document.getElementById(tab).classList.add("active");
+    const target = document.getElementById(tab);
+    if (target) target.classList.add("active");
 }
 
 window.showTab = showTab;
@@ -60,30 +73,54 @@ window.closeAddExpense = closeAddExpense;
 
 
 /* =========================
-   SAVE EXPENSE
+   FIREBASE: LOAD DATA
 ========================= */
 
-function saveExpense() {
+function loadExpenses() {
+
+    const colRef = collection(db, "expenses");
+
+    onSnapshot(colRef, (snapshot) => {
+
+        expenses = [];
+
+        snapshot.forEach(doc => {
+            expenses.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        });
+
+        renderExpenses();
+    });
+}
+
+loadExpenses();
+
+
+/* =========================
+   SAVE EXPENSE (FIREBASE)
+========================= */
+
+async function saveExpense() {
 
     const item = document.getElementById("item").value;
     const vendor = document.getElementById("vendor").value;
     const cost = document.getElementById("cost").value;
     const paid = document.getElementById("paid").value;
 
-    const expense = {
-        id: Date.now(),
+    await addDoc(collection(db, "expenses"), {
+
         item,
         vendor,
         cost: Number(cost),
         paid: Number(paid),
-        remaining: Number(cost) - Number(paid)
-    };
+        remaining: Number(cost) - Number(paid),
 
-    expenses.push(expense);
+        createdAt: new Date()
+    });
 
     clearForm();
-    renderExpenses();
-
     closeAddExpense();
 }
 
@@ -130,7 +167,15 @@ function clearForm() {
 
 
 /* =========================
-   INITIAL RENDER
+   INITIAL RENDER SAFETY
 ========================= */
 
 renderExpenses();
+
+
+/* =========================
+   GLOBAL EXPORTS
+========================= */
+
+window.saveExpense = saveExpense;
+window.renderExpenses = renderExpenses;
