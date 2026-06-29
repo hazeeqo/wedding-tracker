@@ -3,19 +3,23 @@ import {
     db,
     collection,
     addDoc,
-    onSnapshot
+    onSnapshot,
+    deleteDoc,
+    doc,
+    updateDoc
 } from "./firebase.js";
 
 
 /* =========================
-   GLOBAL STATE
+   STATE
 ========================= */
 
 let expenses = [];
+let editId = null;
 
 
 /* =========================
-   SPLASH SCREEN CONTROL
+   SPLASH SCREEN
 ========================= */
 
 window.addEventListener("load", () => {
@@ -33,31 +37,28 @@ window.addEventListener("load", () => {
 
         showTab("dashboard");
 
-    }, 2000);
+    }, 1500);
 });
 
 
 /* =========================
-   TAB NAVIGATION
+   NAVIGATION
 ========================= */
 
 function showTab(tab) {
 
-    const screens = document.querySelectorAll(".screen");
-
-    screens.forEach(screen => {
-        screen.classList.remove("active");
+    document.querySelectorAll(".screen").forEach(s => {
+        s.classList.remove("active");
     });
 
-    const target = document.getElementById(tab);
-    if (target) target.classList.add("active");
+    document.getElementById(tab).classList.add("active");
 }
 
 window.showTab = showTab;
 
 
 /* =========================
-   MODAL CONTROL
+   MODAL
 ========================= */
 
 function openAddExpense() {
@@ -66,6 +67,8 @@ function openAddExpense() {
 
 function closeAddExpense() {
     document.getElementById("expenseModal").classList.add("hidden");
+    clearForm();
+    editId = null;
 }
 
 window.openAddExpense = openAddExpense;
@@ -73,21 +76,19 @@ window.closeAddExpense = closeAddExpense;
 
 
 /* =========================
-   FIREBASE: LOAD DATA
+   FIREBASE LIVE LOAD
 ========================= */
 
 function loadExpenses() {
 
-    const colRef = collection(db, "expenses");
-
-    onSnapshot(colRef, (snapshot) => {
+    onSnapshot(collection(db, "expenses"), (snapshot) => {
 
         expenses = [];
 
-        snapshot.forEach(doc => {
+        snapshot.forEach(docSnap => {
             expenses.push({
-                id: doc.id,
-                ...doc.data()
+                id: docSnap.id,
+                ...docSnap.data()
             });
         });
 
@@ -99,30 +100,76 @@ loadExpenses();
 
 
 /* =========================
-   SAVE EXPENSE (FIREBASE)
+   SAVE / EDIT EXPENSE
 ========================= */
 
 async function saveExpense() {
 
     const item = document.getElementById("item").value;
     const vendor = document.getElementById("vendor").value;
-    const cost = document.getElementById("cost").value;
-    const paid = document.getElementById("paid").value;
+    const cost = Number(document.getElementById("cost").value);
+    const paid = Number(document.getElementById("paid").value);
 
-    await addDoc(collection(db, "expenses"), {
-
+    const data = {
         item,
         vendor,
-        cost: Number(cost),
-        paid: Number(paid),
-        remaining: Number(cost) - Number(paid),
+        cost,
+        paid,
+        remaining: cost - paid,
+        updatedAt: new Date()
+    };
 
-        createdAt: new Date()
-    });
+    if (editId) {
 
-    clearForm();
+        await updateDoc(doc(db, "expenses", editId), data);
+        editId = null;
+
+    } else {
+
+        await addDoc(collection(db, "expenses"), {
+            ...data,
+            createdAt: new Date()
+        });
+    }
+
     closeAddExpense();
 }
+
+window.saveExpense = saveExpense;
+
+
+/* =========================
+   EDIT EXPENSE
+========================= */
+
+function editExpense(id) {
+
+    const exp = expenses.find(e => e.id === id);
+    if (!exp) return;
+
+    editId = id;
+
+    document.getElementById("item").value = exp.item;
+    document.getElementById("vendor").value = exp.vendor;
+    document.getElementById("cost").value = exp.cost;
+    document.getElementById("paid").value = exp.paid;
+
+    openAddExpense();
+}
+
+window.editExpense = editExpense;
+
+
+/* =========================
+   DELETE EXPENSE
+========================= */
+
+async function deleteExpense(id) {
+
+    await deleteDoc(doc(db, "expenses", id));
+}
+
+window.deleteExpense = deleteExpense;
 
 
 /* =========================
@@ -132,7 +179,6 @@ async function saveExpense() {
 function renderExpenses() {
 
     const list = document.getElementById("expenseList");
-
     if (!list) return;
 
     list.innerHTML = "";
@@ -143,9 +189,16 @@ function renderExpenses() {
         div.className = "expenseItem";
 
         div.innerHTML = `
-            <b>${e.item}</b><br>
-            ${e.vendor}<br>
-            RM ${e.cost} | Paid RM ${e.paid} | Left RM ${e.remaining}
+            <div>
+                <b>${e.item}</b><br>
+                ${e.vendor}<br>
+                RM ${e.cost} | Paid RM ${e.paid} | Left RM ${e.remaining}
+            </div>
+
+            <div class="actions">
+                <button class="editBtn" onclick="editExpense('${e.id}')">Edit</button>
+                <button class="deleteBtn" onclick="deleteExpense('${e.id}')">Delete</button>
+            </div>
         `;
 
         list.appendChild(div);
@@ -164,18 +217,3 @@ function clearForm() {
     document.getElementById("cost").value = "";
     document.getElementById("paid").value = "";
 }
-
-
-/* =========================
-   INITIAL RENDER SAFETY
-========================= */
-
-renderExpenses();
-
-
-/* =========================
-   GLOBAL EXPORTS
-========================= */
-
-window.saveExpense = saveExpense;
-window.renderExpenses = renderExpenses;
