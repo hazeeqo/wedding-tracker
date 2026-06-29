@@ -50,19 +50,13 @@ function startApp() {
 ========================= */
 
 window.addEventListener("load", () => {
+    console.log("APP LOADED");
 
-    try {
-        startApp();
-    } catch (err) {
-        console.error("Startup error:", err);
+    const splash = document.getElementById("splash");
+    const app = document.getElementById("app");
 
-        // FAIL SAFE → ALWAYS SHOW APP
-        const splash = document.getElementById("splash");
-        const app = document.getElementById("app");
-
-        if (splash) splash.style.display = "none";
-        if (app) app.classList.remove("hidden");
-    }
+    if (splash) splash.remove();
+    if (app) app.classList.remove("hidden");
 });
 
 
