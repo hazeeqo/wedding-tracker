@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -9,17 +10,12 @@ body {
     background: #f4f5f7;
 }
 
-/* =========================
-   SPLASH SCREEN
-========================= */
+/* ================= SPLASH ================= */
 
 .splash {
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-
     background: white;
 
     display: flex;
@@ -29,34 +25,20 @@ body {
     z-index: 999;
 }
 
-.splashContent {
-    text-align: center;
-}
-
-.logo {
-    font-size: 50px;
-    margin-bottom: 10px;
-}
-
-/* =========================
-   APP WRAPPER
-========================= */
+/* ================= APP ================= */
 
 .app {
     max-width: 500px;
     margin: auto;
     padding: 15px;
-    padding-bottom: 80px;
+    padding-bottom: 90px;
 }
 
-/* hidden helper */
 .hidden {
     display: none !important;
 }
 
-/* =========================
-   SCREENS
-========================= */
+/* ================= SCREENS ================= */
 
 .screen {
     display: none;
@@ -66,50 +48,63 @@ body {
     display: block;
 }
 
-/* =========================
-   HEADINGS
-========================= */
-
-h2 {
-    margin-bottom: 15px;
-}
-
-.sectionTitle {
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
-/* =========================
-   CARDS
-========================= */
+/* ================= CARDS ================= */
 
 .card {
     background: white;
     padding: 15px;
     margin-bottom: 12px;
-
     border-radius: 14px;
-
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-/* =========================
-   EXPENSE LIST ITEMS
-========================= */
+/* ================= EXPENSE ITEM ================= */
 
 .expenseItem {
     background: white;
     padding: 12px;
     margin-bottom: 10px;
-
     border-radius: 12px;
 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+
+    transition: 0.2s;
 }
 
-/* =========================
-   FLOATING BUTTON
-========================= */
+.expenseItem:hover {
+    transform: scale(1.01);
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.editBtn {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.deleteBtn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ================= FAB ================= */
 
 #fab {
     position: fixed;
@@ -132,18 +127,12 @@ h2 {
     cursor: pointer;
 }
 
-/* =========================
-   MODAL
-========================= */
+/* ================= MODAL ================= */
 
 .modal {
     position: fixed;
-    top: 0;
-    left: 0;
-
     width: 100%;
     height: 100%;
-
     background: rgba(0,0,0,0.5);
 
     display: flex;
@@ -153,33 +142,33 @@ h2 {
     z-index: 1000;
 }
 
+.modal.hidden {
+    display: none;
+}
+
 .modalBox {
     background: white;
-
     width: 90%;
     max-width: 350px;
 
     padding: 20px;
-
     border-radius: 14px;
 }
 
 .modalBox input,
 .modalBox textarea {
     width: 100%;
-    margin: 8px 0;
     padding: 10px;
+    margin: 8px 0;
 
-    border-radius: 8px;
     border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
-/* buttons */
 .modalBox button {
     width: 100%;
-    margin-top: 8px;
-
     padding: 10px;
+    margin-top: 8px;
 
     border: none;
     border-radius: 8px;
@@ -187,22 +176,17 @@ h2 {
     cursor: pointer;
 }
 
-/* =========================
-   BOTTOM NAV
-========================= */
+/* ================= BOTTOM NAV ================= */
 
 .bottomNav {
     position: fixed;
     bottom: 0;
-    left: 0;
-
     width: 100%;
 
     display: flex;
     justify-content: space-around;
 
     background: white;
-
     padding: 10px 0;
 
     border-top: 1px solid #ddd;
@@ -211,10 +195,7 @@ h2 {
 .bottomNav button {
     background: none;
     border: none;
-
     font-size: 14px;
-
     color: #444;
-
     cursor: pointer;
 }
