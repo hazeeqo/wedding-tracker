@@ -68,7 +68,6 @@ async function saveExpense() {
 
     if (editId) {
         await updateDoc(doc(db, "expenses", editId), data);
-        editId = null;
     } else {
         await addDoc(collection(db, "expenses"), data);
     }
@@ -91,7 +90,7 @@ function renderExpenses() {
 
         div.innerHTML = `
             <b>${e.item}</b><br>
-            ${e.category}<br>
+            ${e.vendor}<br>
             RM ${e.cost}
         `;
 
@@ -131,7 +130,6 @@ function updateDashboard() {
 
 /* CLEAR */
 function clearForm() {
-
     ["item","vendor","cost","paid"].forEach(id => {
         document.getElementById(id).value = "";
     });
