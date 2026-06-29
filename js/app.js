@@ -1,32 +1,51 @@
+let expenses = [];
+
+/* =========================
+   STARTUP (SPLASH FIX)
+========================= */
+
 window.addEventListener("load", () => {
 
     const splash = document.getElementById("splash");
-    const dashboard = document.getElementById("dashboard");
+    const app = document.getElementById("app");
 
-    // FORCE START STATE
-    splash.classList.remove("hidden");
+    // show splash first (guaranteed)
     splash.style.display = "flex";
-
-    dashboard.classList.remove("active");
+    app.classList.add("hidden");
 
     setTimeout(() => {
 
-        splash.classList.add("hidden");
-        dashboard.classList.add("active");
+        splash.style.display = "none";
+        app.classList.remove("hidden");
+
+        // default screen
+        showTab("dashboard");
 
     }, 2000);
-
 });
-let expenses = [];
+
+
+/* =========================
+   TAB NAVIGATION
+========================= */
 
 function showTab(tab) {
 
-    document.querySelectorAll(".screen").forEach(s => {
-        s.classList.remove("active");
+    const screens = document.querySelectorAll(".screen");
+
+    screens.forEach(screen => {
+        screen.classList.remove("active");
     });
 
     document.getElementById(tab).classList.add("active");
 }
+
+window.showTab = showTab;
+
+
+/* =========================
+   MODAL CONTROL
+========================= */
 
 function openAddExpense() {
     document.getElementById("expenseModal").classList.remove("hidden");
@@ -36,35 +55,82 @@ function closeAddExpense() {
     document.getElementById("expenseModal").classList.add("hidden");
 }
 
+window.openAddExpense = openAddExpense;
+window.closeAddExpense = closeAddExpense;
+
+
+/* =========================
+   SAVE EXPENSE
+========================= */
+
 function saveExpense() {
 
     const item = document.getElementById("item").value;
     const vendor = document.getElementById("vendor").value;
     const cost = document.getElementById("cost").value;
+    const paid = document.getElementById("paid").value;
 
-    expenses.push({ item, vendor, cost });
+    const expense = {
+        id: Date.now(),
+        item,
+        vendor,
+        cost: Number(cost),
+        paid: Number(paid),
+        remaining: Number(cost) - Number(paid)
+    };
 
+    expenses.push(expense);
+
+    clearForm();
     renderExpenses();
 
     closeAddExpense();
 }
 
+
+/* =========================
+   RENDER EXPENSES
+========================= */
+
 function renderExpenses() {
 
     const list = document.getElementById("expenseList");
+
+    if (!list) return;
 
     list.innerHTML = "";
 
     expenses.forEach(e => {
 
         const div = document.createElement("div");
-        div.className = "card";
+        div.className = "expenseItem";
+
         div.innerHTML = `
             <b>${e.item}</b><br>
             ${e.vendor}<br>
-            RM ${e.cost}
+            RM ${e.cost} | Paid RM ${e.paid} | Left RM ${e.remaining}
         `;
 
         list.appendChild(div);
     });
 }
+
+
+/* =========================
+   CLEAR FORM
+========================= */
+
+function clearForm() {
+
+    document.getElementById("item").value = "";
+    document.getElementById("vendor").value = "";
+    document.getElementById("cost").value = "";
+    document.getElementById("paid").value = "";
+}
+
+
+/* =========================
+   INITIAL RENDER
+========================= */
+
+renderExpenses();
