@@ -28,14 +28,14 @@ window.addEventListener("load", () => {
 
         if (!splash || !app) return;
 
-        splash.classList.add("hide");
+        splash.style.opacity = "0";
 
         setTimeout(() => {
             splash.style.display = "none";
             app.classList.remove("hidden");
-        }, 400); // matches CSS fade
+        }, 300);
 
-    }, 1200); // splash duration
+    }, 1200);
 
 });
 
