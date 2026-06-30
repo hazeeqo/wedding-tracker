@@ -18,38 +18,26 @@ let editId = null;
    SPLASH (SAFE)
 ========================= */
 
-
 window.addEventListener("load", () => {
 
     const splash = document.getElementById("splash");
     const app = document.getElementById("app");
 
-    // STEP 1: keep app hidden (DOUBLE SAFETY)
-    if (app) app.style.display = "none";
-
     setTimeout(() => {
 
-        // hide splash
-        if (splash) {
-            splash.style.opacity = "0";
-            splash.style.transition = "0.3s ease";
-        }
+        splash.classList.add("hide");
 
-        // show app AFTER splash fades
         setTimeout(() => {
 
-            if (splash) splash.style.display = "none";
+            splash.remove();
 
-            if (app) {
-                app.style.display = "block";
-                app.classList.add("show");
-            }
+            app.classList.remove("hidden");
 
-        }, 300);
+        }, 400);
 
-    }, 1200);
+    }, 1500);
+
 });
-
 /* =========================
    MODAL
 ========================= */
