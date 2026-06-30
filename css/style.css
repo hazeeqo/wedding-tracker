@@ -1,3 +1,10 @@
+#app {
+    display: none; /* HARD BLOCK */
+}
+
+#app.show {
+    display: block;
+}
 
 body {
     margin: 0;
