@@ -24,19 +24,30 @@ window.addEventListener("load", () => {
     const splash = document.getElementById("splash");
     const app = document.getElementById("app");
 
+    // STEP 1: keep app hidden (DOUBLE SAFETY)
+    if (app) app.style.display = "none";
+
     setTimeout(() => {
 
-        if (!splash || !app) return;
+        // hide splash
+        if (splash) {
+            splash.style.opacity = "0";
+            splash.style.transition = "0.3s ease";
+        }
 
-        splash.style.opacity = "0";
-
+        // show app AFTER splash fades
         setTimeout(() => {
-            splash.style.display = "none";
-            app.classList.remove("hidden");
+
+            if (splash) splash.style.display = "none";
+
+            if (app) {
+                app.style.display = "block";
+                app.classList.add("show");
+            }
+
         }, 300);
 
     }, 1200);
-
 });
 
 /* =========================
