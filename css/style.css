@@ -1,9 +1,5 @@
-#app {
-    display: none; /* HARD BLOCK */
-}
-
-#app.show {
-    display: block;
+.hidden {
+    display: none;
 }
 
 body {
@@ -19,54 +15,35 @@ body {
 #splash {
     position: fixed;
     inset: 0;
-
     background: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     z-index: 9999;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-}
-
-.splashContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.ring {
-    font-size: 48px;
-    animation: float 1.5s ease-in-out infinite;
-}
-
-#splash h1 {
-    margin: 0;
-    font-size: 22px;
-}
-
-#splash p {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-}
-
-/* subtle animation */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-6px); }
-    100% { transform: translateY(0px); }
+    opacity: 1;
+    transition: opacity .4s ease;
 }
 
 #splash.hide {
     opacity: 0;
-    pointer-events: none;
 }
 
-#app {
-    padding: 15px;
+.splashContent{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+}
+
+.ring{
+    font-size:60px;
+}
+
+#app{
+    padding:15px;
 }
 
 .screen {
