@@ -1,3 +1,21 @@
+// 1. IMPORTS (must stay first)
+import { saveExpense } from "./expenses.js";
+
+
+// 2. SPLASH CONTROL (run immediately after DOM is ready)
+document.addEventListener("DOMContentLoaded", () => {
+
+    const splash = document.getElementById("splash");
+    const app = document.getElementById("app");
+
+    app.classList.add("hidden");
+
+    setTimeout(() => {
+        splash.style.display = "none";
+        app.classList.remove("hidden");
+    }, 2000);
+
+});
 
 import {
     db,
@@ -13,7 +31,9 @@ import {
 let expenses = [];
 let editId = null;
 
-
+// 4. FUNCTIONS
+export function openAddExpense() {
+    document.getElementById("expenseModal").classList.remove("hidden");
 /* =========================
    SPLASH (SAFE)
 ========================= */
