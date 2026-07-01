@@ -2,18 +2,23 @@
 import { saveExpense } from "./expenses.js";
 
 
-// 2. SPLASH CONTROL (run immediately after DOM is ready)
 document.addEventListener("DOMContentLoaded", () => {
 
     const splash = document.getElementById("splash");
     const app = document.getElementById("app");
 
+    if (!splash || !app) {
+        console.error("Missing splash or app element");
+        return;
+    }
+
+    // FORCE initial state
     app.classList.add("hidden");
 
     setTimeout(() => {
         splash.style.display = "none";
         app.classList.remove("hidden");
-    }, 2000);
+    }, 1500);
 
 });
 
