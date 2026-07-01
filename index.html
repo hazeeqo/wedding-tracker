@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Tracker</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+
+    <div class="splashContent">
+        <div class="ring">💍</div>
+        <h1>Wedding Tracker</h1>
+        <p>Loading your wedding plan...</p>
+    </div>
+
+</div>
+
+<!-- APP WRAPPER -->
+<div id="app" class="hidden">
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="screen active">
+
+        <h2>Dashboard</h2>
+
+        <div class="card">
+            <h3>Total Budget</h3>
+            <input id="budgetInput" type="number" placeholder="Enter budget">
+        </div>
+
+        <div class="card">
+            <h3>Spent</h3>
+            <p id="totalSpent">RM 0</p>
+        </div>
+
+        <div class="card">
+            <h3>Remaining</h3>
+            <p id="totalRemaining">RM 0</p>
+        </div>
+
+        <div class="card">
+            <h3>Progress</h3>
+            <div class="progressBar">
+                <div id="progressFill"></div>
+            </div>
+        </div>
+
+        <h3>Recent Expenses</h3>
+        <div id="recentExpenses"></div>
+
+    </section>
+
+
+    <!-- EXPENSES -->
+    <section id="expenses" class="screen">
+
+        <h2>Expenses</h2>
+
+        <button onclick="openAddExpense()">+ Add Expense</button>
+
+        <div id="expenseList"></div>
+
+    </section>
+
+</div>
+
+
+<!-- MODAL -->
+<div id="expenseModal" class="modal hidden">
+
+    <div class="modalBox">
+
+        <h2>Add Expense</h2>
+
+        <input id="item" placeholder="Item">
+        <input id="vendor" placeholder="Vendor">
+
+        <select id="category">
+            <option value="Venue">Venue</option>
+            <option value="Food">Food</option>
+            <option value="Outfit">Outfit</option>
+            <option value="Decoration">Decoration</option>
+            <option value="Photography">Photography</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <input id="cost" type="number" placeholder="Cost">
+        <input id="paid" type="number" placeholder="Paid">
+
+        <button onclick="saveExpense()">Save</button>
+        <button onclick="closeAddExpense()">Close</button>
+
+    </div>
+
+</div>
+
+
+<script type="module" src="js/app.js"></script>
+
+</body>
+</html>
