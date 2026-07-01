@@ -2,23 +2,17 @@
 import { saveExpense } from "./expenses.js";
 
 
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
 
     const splash = document.getElementById("splash");
     const app = document.getElementById("app");
 
-    if (!splash || !app) {
-        console.error("Missing splash or app element");
-        return;
-    }
-
-    // FORCE initial state
     app.classList.add("hidden");
 
     setTimeout(() => {
         splash.style.display = "none";
         app.classList.remove("hidden");
-    }, 1500);
+    }, 1200);
 
 });
 
